@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.2.xsd
+">
+
+    <!-- 引入属性文件 -->
+    <context:property-placeholder location="classpath:config.properties" />
+
+    <!-- 自动扫描(自动注入) -->
+    <context:annotation-config></context:annotation-config>
+    <!-- 扫描到接口的实现包中 -->
+    <context:component-scan base-package="com.congfu.serviceImp" />
+    <!-- 视图模式配置,velocity配置文件-->
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">  
+	    <property name="resourceLoaderPath" value="/WEB-INF/views" />
+	    <property name="configLocation" value="classpath:velocity.properties" />
+	</bean>  
+
+	<!-- 配置后缀 -->
+	<bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">  
+	    <property name="suffix" value=".vm" />  
+	    <!-- velocity toolbox -->
+	    <property name="contentType" value="text/html;charset=utf-8" />
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+	</bean>
+</beans>
