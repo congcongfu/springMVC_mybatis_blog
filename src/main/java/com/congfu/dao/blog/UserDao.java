@@ -45,7 +45,7 @@ public interface UserDao {
      * Date 2016年9月13日
      * </PRE>
      */
-    public User findById(int id);
+    public User findById(Long id);
     /**
      * 条件查询
      * 
@@ -59,4 +59,6 @@ public interface UserDao {
      * </PRE>
      */
     public List<User> query(User user);
+
+    public  User findByPhone(Long number);
 }
