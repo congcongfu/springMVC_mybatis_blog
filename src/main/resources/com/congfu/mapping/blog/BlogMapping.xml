@@ -32,6 +32,4 @@
   <!-- 条件查询 -->
   <select id="findByQuery" parameterType="com.congfu.model.blog.Blog" resultMap="studentResultMap">
   </select>
-  
-      
-</mapper>  
+</mapper>
