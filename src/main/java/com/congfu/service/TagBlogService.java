@@ -1,14 +1,15 @@
-package com.congfu.service.blog;
+package com.congfu.service;
 
 import java.util.List;
 
-import com.congfu.model.blog.Blog;
+import com.congfu.model.TagBlog;
 
-public interface BlogService {
+public interface TagBlogService {
     /**
-     * 新增blog
      * 
-     * @param blog
+     * 新增
+     * 
+     * @param tagBlog
      * @return int
      * @since v0.0.1
      * <PRE>
@@ -16,10 +17,13 @@ public interface BlogService {
      * Date 2016年9月14日
      * </PRE>
      */
-    public int insert(Blog blog);
+    public int insert(TagBlog tagBlog);
     /**
-     * 更新blog
      * 
+     * 更新
+     * 
+     * @param tagBlog
+     * @return
      * @return int
      * @since v0.0.1
      * <PRE>
@@ -27,30 +31,33 @@ public interface BlogService {
      * Date 2016年9月14日
      * </PRE>
      */
-    public int update();
+    public int update(TagBlog tagBlog);
     /**
+     * 
      * 根据id查询
      * 
      * @param id
-     * @return Blog
+     * @return
+     * @return TagBlog
      * @since v0.0.1
      * <PRE>
      * author congfu
      * Date 2016年9月14日
      * </PRE>
      */
-    public Blog findById(Integer id);
+    public TagBlog findById(Integer id);
     /**
+     * 
      * 条件查询
      * 
-     * @param blog
+     * @param tagBlog
      * @return
-     * @return List<Blog>
+     * @return List<TagBlog>
      * @since v0.0.1
      * <PRE>
      * author congfu
      * Date 2016年9月14日
      * </PRE>
      */
-    public List<Blog> query(Blog blog);
+    public List<TagBlog> query(TagBlog tagBlog);
 }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3.0-mapper.dtd">  
+<mapper namespace="com.congfu.dao.BlogDao">  
+  <resultMap id="studentResultMap" type="com.congfu.model.Blog" >
+  	<id property="id" column="id"/>
+  	<result property="userId" column="userId"/>
+  	<result property="author" column="author" />
+  	<result property="title" column="title" />
+  	<result property="color" column="color" />
+  	<result property="urlName" column="urlName" />
+  	<result property="urlType" column="urlType" />
+  	<result property="content" column="content" />
+  	<result property="tags" column="tags" />
+  	<result property="publishTime" column="publishTime" />
+  	<result property="isDeleted" column="isDeleted" />
+  	<result property="isTop" column="isTop" />
+  	<result property="createTime" column="createTime" />
+  	<result property="updateTime" column="updateTime" />
+  	<result property="createMan" column="createMan" />
+  	<result property="updateMan" column="updateMan" />
+  	<result property="version" column="version" />
+  </resultMap>
+  <!--新增博客信息 -->
+  <insert id="insert" parameterType="com.congfu.model.Blog" useGeneratedKeys="true" keyProperty="id">
+  	insert into blog(userId,author,title,color,urlName,urlType,content,tags,view,status,publishTime,isDeleted,
+  	isTop,createTime,updateTime,createMan,updateMan,version)
+  	 values(#{userId},#{author},#{title},#{color},#{urlName},#{urlType},#{content},#{tags},#{view},#{status},#{publishTime},#{isDeleted},
+  	 #{isTop},now(),#{updateTime},#{createMan},#{updateMan},0)
+  </insert>
+  <!-- 批量插入 -->
+<!--   <insert id="batchInsert" parameterType="com.congfu.model.blog.Blog" useGeneratedKeys="true" keyProperty="id">
+  	insert into blog(userId,author,title,color,urlName,urlType,content,tags,view,status,publishTime,isDeleted,
+  	isTop,createTime,updateTime,createMan,updateMan,version) values
+  	<foreach item="item" collection="list" separator=",">
+	  (#{userId},#{author},#{title},#{color},#{urlName},#{urlType},#{content},#{tags},#{view},#{status},#{publishTime},#{isDeleted},
+	   #{isTop},now(),#{updateTime},#{createMan},#{updateMan},0)
+  	</foreach>
+  </insert> -->
+  <!-- 根据id 查询博客 -->
+   <select id="findById" parameterType="Long" resultType="com.congfu.model.Blog">
+ 	 select id,userId,author,
+  		title,color,urlName,
+  		urlType,content,tags,
+  		view,status,publishTime,
+  		isDeleted,isTop,createTime,
+  		updateTime,createMan,
+  		updateMan,version
+  		from blog
+  		where id=#{id}
+  </select> 
+  <!-- 根据id 更新 -->
+  <update id="update" parameterType="com.congfu.model.Blog">
+  	update blog
+  	<trim prefix="SET" suffixOverrides=",">
+  		<if test="title != null">title=#{title},</if>
+  		<if test="color != null"> color=#{color},</if>
+  		<if test="urlName != null"> urlName=#{urlName},</if>
+  		<if test="content != null"> content=#{content},</if>
+  		<if test="view != null"> view=#{view},</if>
+  		<if test="status != null"> status=#{status},</if>
+  		<if test="isDeleted != null"> isDeleted=#{isDeleted},</if>
+  		<if test="isTop != null"> isTop=#{isTop},</if>
+  		<if test="updateMan != null"> updateMan=#{updateMan},</if>
+  		<if test="publishTime != null"> publishTime=#{publishTime},</if>
+  		<if test="updateTime != null"> updateTime=#{updateTime},</if>
+  		<if test="version != null"> version=#{version}+1,</if>
+  	</trim>
+  	where id =#{id} and version=#{version}
+  </update>
+  <!-- 条件查询 -->
+   <select id="query" parameterType="com.congfu.query.BlogQuery" resultMap="studentResultMap">
+ 	 select id,userId,
+ 	 		author,title,
+ 	 		color,urlName,
+  			urlType,content,
+  			tags,view,
+  			status,publishTime,
+  			isDeleted,isTop,
+  			createTime,updateTime,
+  			createMan,updateMan,version
+  		from blog
+  		<trim prefix="WHERE(" suffix=")" prefixOverrides="AND |OR "> 
+		    <if test="userId != null">
+		       AND  userId = #{userId}
+		    </if> 
+		    <if test="author != null">
+		       AND  author like CONCAT(CONCAT('',#{author}),'%') 
+		    </if>
+		     <if test="tags != null">
+		       AND  tags=#{tags}
+		    </if>
+		    <if test="title != null">
+		       AND  title like CONCAT(CONCAT('',#{title}),'%')
+		    </if>
+		    <if test="createMan != null">
+		       AND  createMan＝#{createMan}
+		    </if>
+		    <if test="urlName != null">
+		       AND  urlName＝#{urlName}
+		    </if>
+		    <if test="isDeleted != null">
+		       AND  isDeleted＝#{isDeleted}
+		    </if>
+		    <if test="publishTimeBegin != null">
+		       AND  publishTime<![CDATA[>=#{publishTimeBegin}]]>
+		    </if>
+		    <if test="publishTimeEnd != null">
+		       AND  publishTime<![CDATA[<#{publishTimeEnd}]]>
+		    </if>
+		    <if test="createTimeBegin != null">
+		       AND  createTime<![CDATA[ >= #{createTimeBegin}]]>
+		    </if>
+		    <if test="createTimeEnd != null">
+		       AND  createTime<![CDATA[<#{createTimeEnd}]]>
+		    </if>
+  	</trim>
+  </select> 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

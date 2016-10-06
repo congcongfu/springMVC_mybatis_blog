@@ -12,58 +12,59 @@ import org.springframework.transaction.annotation.Transactional;
 import com.congfu.dao.StudentDao;
 import com.congfu.model.Student;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
-@TransactionConfiguration(transactionManager = "transactionManager",defaultRollback = true)
-@ContextConfiguration(locations={"classpath:spring.xml","classpath:spring-mybatis.xml"})
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@ContextConfiguration(locations = { "classpath:spring.xml", "classpath:spring-mybatis.xml" })
 public class MybatisTest {
+
     @Autowired
     private StudentDao studentDao;
-    
-    public Student getStudent(){
+
+    public Student getStudent() {
         Student student = new Student();
-        student.setName("Fuck");
+        student.setName("你聪哥");
         student.setAge(22);
         student.setSex("male");
         return student;
     }
-    
+
     @Test
-    public void test1(){
+    public void test1() {
         System.out.println("Hello world");
     }
-    
+
     @Test
-    public void testFindById(){
+    public void testFindById() {
         Student student = new Student();
-        try{
+        try {
             student = studentDao.findById(2);
             System.out.println(student);
-            Assert.assertTrue(student.getId() >0);
-        }catch(Exception e){
+            Assert.assertTrue(student.getId() > 0);
+        } catch (Exception e) {
             e.printStackTrace();
             Assert.fail();
         }
     }
+
     @Test
-    @Transactional
-    public void testInsert(){
+//    @Transactional
+    public void testInsert() {
         Student student = getStudent();
-        try{
+        try {
             int i = studentDao.insert(student);
             System.out.println(student.getId());
-            Assert.assertTrue(student.getId() >0);
-        }catch(Exception e){
+            Assert.assertTrue(student.getId() > 0);
+        } catch (Exception e) {
             e.printStackTrace();
             Assert.fail();
         }
     }
-    
+
     @Test
     @Transactional
-    public void testUpdate(){
+    public void testUpdate() {
         Student student = getStudent();
-        try{
+        try {
             System.out.println(student);
             studentDao.insert(student);
             student = studentDao.findById(student.getId());
@@ -74,8 +75,8 @@ public class MybatisTest {
             int a = studentDao.update(student);
             student = studentDao.findById(student.getId());
             System.out.println(student);
-            Assert.assertTrue(a >0);
-        }catch(Exception e){
+            Assert.assertTrue(a > 0);
+        } catch (Exception e) {
             e.printStackTrace();
             Assert.fail();
         }

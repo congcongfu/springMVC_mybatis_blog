@@ -2,7 +2,6 @@ package com.congfu.serviceImp;
 
 import java.util.List;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,8 @@ public class StudentServiceImp extends CommonServoce implements StudentService {
     static{
         System.out.println("hello spring-mybatis");
     }
-    
+
+    @org.junit.Test
     public Student findById(int id) throws Exception {
         Student student = new Student();
         try{

@@ -1,4 +1,4 @@
-package com.congfu.model.blog;
+package com.congfu.model;
 
 import java.util.Date;
 

@@ -1,29 +1,14 @@
-package com.congfu.dao.blog;
+package com.congfu.dao;
 
 import java.util.List;
 
+import com.congfu.model.TagBlog;
 
-import com.congfu.model.blog.User;
-
-public interface UserDao {
+public interface TagBlogDao {
     /**
      * 
-     * 新增用户
+     * 新增
      * 
-     * @param user
-     * @return int
-     * @since v0.0.1
-     * <PRE>
-     * author congfu
-     * Date 2016年9月13日
-     * </PRE>
-     */
-    public int insert(User user);
-    /**
-     * 
-     * 修改用户信息
-     * 
-     * @param user
      * @return
      * @return int
      * @since v0.0.1
@@ -32,33 +17,46 @@ public interface UserDao {
      * Date 2016年9月13日
      * </PRE>
      */
-    public int update(User user);
+    public int insert();
     /**
      * 
-     * 根据用户id查找
+     * 更新
      * 
-     * @param id
-     * @return User
+     * @return
+     * @return int
      * @since v0.0.1
      * <PRE>
      * author congfu
      * Date 2016年9月13日
      * </PRE>
      */
-    public User findById(Long id);
+    public int update();
     /**
+     * 
+     * 根据id查找
+     * 
+     * @return
+     * @return TagBlog
+     * @since v0.0.1
+     * <PRE>
+     * author congfu
+     * Date 2016年9月13日
+     * </PRE>
+     */
+    public TagBlog findById();
+    /**
+     * 
      * 条件查询
      * 
-     * @param user
+     * @param tagBlog
      * @return
-     * @return List<User>
+     * @return List<TagBlog>
      * @since v0.0.1
      * <PRE>
      * author congfu
      * Date 2016年9月13日
      * </PRE>
      */
-    public List<User> query(User user);
+    public List<TagBlog> query(TagBlog tagBlog);
 
-    public  User findByPhone(Long number);
 }
