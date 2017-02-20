@@ -2,7 +2,7 @@
  * Company
  * Copyright (C) 2004-2017 All Rights Reserved.
  */
-package demo;
+package com.congfu.demo;
 
 import org.springframework.amqp.utils.SerializationUtils;
 

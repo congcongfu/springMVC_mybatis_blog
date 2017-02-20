@@ -13,7 +13,8 @@ import com.congfu.model.Blog;
 import com.congfu.model.User;
 import com.congfu.service.BlogService;
 import com.congfu.service.Process;
-import com.congfu.service.UserService;
+
+import java.util.Date;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
@@ -24,28 +25,37 @@ public class BlogServiceTest {
     private BlogService blogService;
     @Autowired
     private Process     process;
-    @Autowired
-    private UserService userService;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void update() {
-        try {
-            process.myAction();
-        } catch (Exception e) {
-            // TODO: handle exception
+    }
+
+    @Test
+    public void testInsert(){
+        Blog blog = new Blog();
+        blog.setAuthor("congfu");
+        blog.setCreateTime(new Date());
+        blog.setCreateMan("congfu");
+        blog.setUserId(100);
+        blog.setTitle("fuck yourslef");
+        blog.setColor("white");
+        blog.setUrlName("www.googel.com");
+        blog.setVersion(1);
+        blog.setVersion(0);
+        try{
+            blogService.insert(blog);
+
+        }catch (Exception e){
             e.printStackTrace();
         }
-        User user = userService.findById(1l);
-        user.setUpdateMan("fu cong");
-        user.setEmail("fuckyou@123.com");
-        userService.update(user);
+
     }
 
     @Test
     public void testUpdate() {
         Blog blog = null;
         try {
-            blog = blogService.findById(1L);
+            blog = blogService.findById(1);
             System.out.println(blog);
         } catch (Exception e) {
             e.printStackTrace();

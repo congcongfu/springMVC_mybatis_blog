@@ -12,19 +12,13 @@ import com.congfu.model.Tag;
 import com.congfu.model.User;
 import com.congfu.service.BlogService;
 import com.congfu.service.Process;
-import com.congfu.service.TagService;
-import com.congfu.service.UserService;
 
 @Service("process")
 public class ProcessImpl implements Process {
 
-    @Autowired
-    private TagService  tagService;
 
     @Autowired
     private BlogService blogService;
-    @Autowired
-    private UserService userService;
 
     @Transactional(readOnly = true, propagation = Propagation.NESTED)
     public void myAction() {
@@ -37,24 +31,24 @@ public class ProcessImpl implements Process {
     }
 
     public void doAction() {
-        Blog blog = blogService.findById(1L);
+        Blog blog = blogService.findById(1);
         blog.setColor("yellow");
         blog.setUpdateMan("fu cong");
         blogService.update(blog);
 
-        Tag tag = tagService.findById(1L);
-        tag.setUpdateMan("hellow test");
-        tag.setUpdateTime(new Date());
-        tagService.update(tag);
+//        Tag tag = tagService.findById(1L);
+//        tag.setUpdateMan("hellow test");
+//        tag.setUpdateTime(new Date());
+//        tagService.update(tag);
 
     }
 
     @Transactional
     public void transactionAction() {
-        User user = userService.findById(1l);
-        user.setUpdateMan("fu cong");
-        user.setEmail("googel@123.com");
-        userService.update(user);
+//        User user = userService.findById(1l);
+//        user.setUpdateMan("fu cong");
+//        user.setEmail("googel@123.com");
+//        userService.update(user);
         try {
             this.myAction();
         } catch (Exception e) {

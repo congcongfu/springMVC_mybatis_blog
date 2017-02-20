@@ -8,6 +8,9 @@
 package com.congfu.dao;
 
 import com.congfu.model.Blog;
+import com.congfu.query.BlogQuery;
+
+import java.util.List;
 
 public interface BlogDao {
     /**
@@ -65,4 +68,6 @@ public interface BlogDao {
      * @mbg.generated
      */
     int updateByPrimaryKey(java.util.HashMap dataMap);
+
+    List<Blog> query(BlogQuery blogQuery);
 }

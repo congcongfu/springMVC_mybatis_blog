@@ -1,5 +1,7 @@
 package com.congfu.service;
 
+import com.congfu.model.User;
+
 /**
  * ${TAGS}
  * &lt;PRE&gt;
@@ -10,4 +12,11 @@ package com.congfu.service;
  * @since v0.0.1
  */
 public interface UserProducer {
+
+    /**
+     * send message to queue
+     * @param queueKey
+     * @param user
+     */
+    public void sendDataToQueue(String queueKey, User user);
 }

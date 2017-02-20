@@ -20,22 +20,15 @@
     <result column="view" jdbcType="INTEGER" property="view" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.congfu.model.Blog">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_id, author, title, color, url_name, url_type, tags, is_deleted, is_top, 
-    create_time, create_man, update_time, update_man, version, view, status, publish_time
+    create_time, create_man, update_time, update_man, version, view, status, publish_time,content
   </sql>
-  <sql id="Blob_Column_List">
-    content
-  </sql>
-  <select id="selectById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from blog
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -47,19 +40,19 @@
     <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into blog (id, user_id, author, 
-      title, color, url_name, 
-      url_type, tags, is_deleted, 
-      is_top, create_time, create_man, 
-      update_time, update_man, version, 
-      view, status, publish_time, 
+    insert into blog (id, user_id, author,
+      title, color, url_name,
+      url_type, tags, is_deleted,
+      is_top, create_time, create_man,
+      update_time, update_man, version,
+      view, status, publish_time,
       content)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{urlName,jdbcType=VARCHAR}, 
-      #{urlType,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, 
-      #{isTop,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createMan,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateMan,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, 
-      #{view,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR},
+      #{title,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{urlName,jdbcType=VARCHAR},
+      #{urlType,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER},
+      #{isTop,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createMan,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateMan,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER},
+      #{view,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP},
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.congfu.model.Blog">
@@ -257,7 +250,7 @@
       create_man = #{createMan,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       update_man = #{updateMan,jdbcType=VARCHAR},
-      version = #{version,jdbcType=INTEGER},
+      version = #{version+1,jdbcType=INTEGER},
       view = #{view,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       publish_time = #{publishTime,jdbcType=TIMESTAMP},
@@ -279,10 +272,51 @@
       create_man = #{createMan,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       update_man = #{updateMan,jdbcType=VARCHAR},
-      version = #{version,jdbcType=INTEGER},
+      version = #{version+1,jdbcType=INTEGER},
       view = #{view,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       publish_time = #{publishTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="query" parameterType="com.congfu.query.BlogQuery" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from blog
+    <trim prefix="WHERE(" suffix=")" prefixOverrides="AND |OR ">
+      <if test="userId != null">
+        AND  user_id = #{userId}
+      </if>
+      <if test="author != null">
+        AND  author like CONCAT(CONCAT('',#{author}),'%')
+      </if>
+      <if test="tags != null">
+        AND  tags=#{tags}
+      </if>
+      <if test="title != null">
+        AND  title like CONCAT(CONCAT('',#{title}),'%')
+      </if>
+      <if test="createMan != null">
+        AND  create_man = #{createMan}
+      </if>
+      <if test="urlName != null">
+        AND  url_name = #{urlName}
+      </if>
+      <if test="isDeleted != null">
+         AND  isDeleted = #{isDeleted}
+      </if>
+      <if test="publishTimeBegin != null">
+        AND  publish_time<![CDATA[>=#{publishTimeBegin}]]>
+      </if>
+      <if test="publishTimeEnd != null">
+        AND  publish_time<![CDATA[<#{publishTimeEnd}]]>
+      </if>
+      <if test="createTimeBegin != null">
+        AND  create_Time<![CDATA[ >= #{createTimeBegin}]]>
+      </if>
+      <if test="createTimeEnd != null">
+        AND  create_time<![CDATA[<#{createTimeEnd}]]>
+      </if>
+    </trim>
+  </select>
 </mapper>

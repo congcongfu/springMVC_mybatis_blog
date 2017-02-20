@@ -11,7 +11,6 @@ import com.rabbitmq.client.ShutdownSignalException;
 import org.springframework.amqp.utils.SerializationUtils;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;

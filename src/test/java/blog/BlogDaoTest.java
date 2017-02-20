@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.congfu.dao.BlogDao;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.congfu.dao.BlogDao;
 import com.congfu.model.Blog;
 import com.congfu.query.BlogQuery;
 
@@ -40,6 +40,7 @@ public class BlogDaoTest {
         blog.setUrlName("www.googel.com");
         blog.setCreateMan("你聪哥");
         blog.setCreateTime(new Date());
+        blog.setStatus(0);
         try {
             int a = blogDao.insert(blog);
             Assert.assertTrue(a > 0);
@@ -54,7 +55,7 @@ public class BlogDaoTest {
     public void testFindById() {
         Blog blog = new Blog();
         try {
-            blog = blogDao.findById(1l);
+            blog = blogDao.selectById(1);
             System.out.println(blog);
             Assert.assertTrue(blog.getId() > 0);
         } catch (Exception e) {
@@ -83,7 +84,7 @@ public class BlogDaoTest {
         query.setAuthor("cong");
         List<Blog> list = new ArrayList<Blog>();
         try {
-            list = blogDao.query(query);
+//            list = blogDao.query(query);
             System.out.println(list.size());
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,16 +95,16 @@ public class BlogDaoTest {
     public void testUpdate() {
         Blog blog = null;
         try {
-            blog = blogDao.findById(1L);
+            blog = blogDao.selectById(1);
             blog.setUpdateMan("宛燕");
             blog.setUpdateTime(new Date());
             blog.setTags("标签");
             blog.setTitle("博客");
             blog.setIsDeleted(0);
             blog.setIsTop(1);
-            int result = blogDao.update(blog);
+            int result = blogDao.updateByPrimaryKeyWithBLOBs(blog);
             Assert.assertTrue(result > 0);
-            blog = blogDao.findById(1L);
+            blog = blogDao.selectById(1);
             System.out.println(blog);
         } catch (Exception e) {
             // TODO: handle exception

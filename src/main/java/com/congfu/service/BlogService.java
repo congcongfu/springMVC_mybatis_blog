@@ -46,7 +46,7 @@ public interface BlogService {
      * Date 2016年9月14日
      * </PRE>
      */
-    public Blog findById(Long id);
+    public Blog findById(Integer id);
 
     /**
      * 条件查询
