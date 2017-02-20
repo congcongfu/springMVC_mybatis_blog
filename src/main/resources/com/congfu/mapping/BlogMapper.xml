@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.congfu.dao.BlogDao">
+  <resultMap id="BaseResultMap" type="com.congfu.model.Blog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="url_name" jdbcType="VARCHAR" property="urlName" />
+    <result column="url_type" jdbcType="VARCHAR" property="urlType" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="is_top" jdbcType="INTEGER" property="isTop" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_man" jdbcType="VARCHAR" property="createMan" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_man" jdbcType="VARCHAR" property="updateMan" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="view" jdbcType="INTEGER" property="view" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.congfu.model.Blog">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, author, title, color, url_name, url_type, tags, is_deleted, is_top, 
+    create_time, create_man, update_time, update_man, version, view, status, publish_time
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.congfu.model.Blog">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into blog (id, user_id, author, 
+      title, color, url_name, 
+      url_type, tags, is_deleted, 
+      is_top, create_time, create_man, 
+      update_time, update_man, version, 
+      view, status, publish_time, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{urlName,jdbcType=VARCHAR}, 
+      #{urlType,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, 
+      #{isTop,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createMan,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateMan,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, 
+      #{view,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.congfu.model.Blog">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into blog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      id,
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="author != null">
+        author,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="urlName != null">
+        url_name,
+      </if>
+      <if test="urlType != null">
+        url_type,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="isTop != null">
+        is_top,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createMan != null">
+        create_man,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateMan != null">
+        update_man,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="view != null">
+        view,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="urlName != null">
+        #{urlName,jdbcType=VARCHAR},
+      </if>
+      <if test="urlType != null">
+        #{urlType,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createMan != null">
+        #{createMan,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateMan != null">
+        #{updateMan,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="view != null">
+        #{view,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.congfu.model.Blog">
+    update blog
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="author != null">
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="urlName != null">
+        url_name = #{urlName,jdbcType=VARCHAR},
+      </if>
+      <if test="urlType != null">
+        url_type = #{urlType,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createMan != null">
+        create_man = #{createMan,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateMan != null">
+        update_man = #{updateMan,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="view != null">
+        view = #{view,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.congfu.model.Blog">
+    update blog
+    set user_id = #{userId,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      url_name = #{urlName,jdbcType=VARCHAR},
+      url_type = #{urlType,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
+      is_top = #{isTop,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_man = #{createMan,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_man = #{updateMan,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      view = #{view,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.congfu.model.Blog">
+    update blog
+    set user_id = #{userId,jdbcType=INTEGER},
+      author = #{author,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      url_name = #{urlName,jdbcType=VARCHAR},
+      url_type = #{urlType,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
+      is_top = #{isTop,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_man = #{createMan,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_man = #{updateMan,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      view = #{view,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>Course List1</title>
+	</head>
+	
+	<body>
+		<h2>COURSE LIST</h2>
+		<table>
+		<table width="600" cellspacing="1" cellpadding="1">
+			<tr bgcolor="#999999">
+				<td>COURSE ID</td>
+				<td>NAME</td>
+				<td>START</td>
+				<td>END</td>
+			</tr>
+			<td>${title}</td>
+			<td>${content}</td>
+		</table>
+		</table>
+	</body>
+	<script type="text/javascript" src="../resource/js/login.js"></script>  
+	<script type="text/javascript">
+		$(document).ready(function() {
+    	alert("ok");
+		});
+</script>
+</html>
