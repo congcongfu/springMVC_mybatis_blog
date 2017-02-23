@@ -27,7 +27,7 @@ public class BaseModel {
     /**
      * 版本
      */
-    private String  version;
+    private Long  version;
 
     public Integer getId() {
         return id;
@@ -69,11 +69,11 @@ public class BaseModel {
         this.updateMan = updateMan;
     }
 
-    public String getVersion() {
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(Long version) {
         this.version = version;
     }
 }

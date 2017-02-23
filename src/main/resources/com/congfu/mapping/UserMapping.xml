@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3.0-mapper.dtd">
+<mapper namespace="com.congfu.dao.UserDao">
+    <resultMap id="studentResultMap" type="com.congfu.model.User" >
+        <id property="id" column="id"/>
+        <result property="user_name" column="userName"/>
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+        <result property="login_count" column="loginCount" />
+        <result property="last_login_ip" column="lastLoginIp" />
+        <result property="last_login_time" column="lastLoginTime" />
+        <result property="authkey" column="authkey" />
+        <result property="active" column="active" />
+        <result property="phone_number" column="phoneNumber" />
+        <result property="is_deleted" column="isDeleted" />
+        <result property="create_time" column="createTime" />
+        <result property="update_time" column="updateTime" />
+        <result property="create_man" column="createMan" />
+        <result property="update_man" column="updateMan" />
+    </resultMap>
+    <!--新增用户信息 -->
+    <insert id="insert" parameterType="com.congfu.model.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user(user_name,password,email,login_count,last_login_ip,last_login_time,authkey,active,phone_number,is_deleted,
+        create_time,update_time,create_man,update_man)
+        values(#{userName},#{password},#{email},#{loginCount},#{lastLoginIp},#{lastLoginTime},#{authkey},#{active},#{phoneNumber},#{isDeleted},
+        now(),#{updateTime},#{createMan},#{updateMan})
+    </insert>
+    <!-- 批量插入 -->
+    <!--   <insert id="batchInsert" parameterType="com.congfu.model.blog.Blog" useGeneratedKeys="true" keyProperty="id">
+          insert into blog(userId,author,title,color,urlName,urlType,content,tags,view,status,publishTime,isDeleted,
+          isTop,createTime,updateTime,createMan,updateMan,version) values
+          <foreach item="item" collection="list" separator=",">
+          (#{userId},#{author},#{title},#{color},#{urlName},#{urlType},#{content},#{tags},#{view},#{status},#{publishTime},#{isDeleted},
+           #{isTop},now(),#{updateTime},#{createMan},#{updateMan},0)
+          </foreach>
+      </insert> -->
+    <!-- 根据id 查询用户 -->
+    <select id="findById" parameterType="Long" resultType="com.congfu.model.User">
+        select id,user_name,
+        password,email,login_count,
+        last_login_ip,last_login_time,
+        authkey,active,
+        phone_number,is_deleted,
+        create_time,update_time,
+        create_man,update_man
+        from user
+        where id=#{id}
+    </select>
+    <!-- 根据id 更新 -->
+    <update id="update" parameterType="com.congfu.model.User">
+        update user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="password != null">password=#{password},</if>
+            <if test="email != null"> email=#{email},</if>
+            <if test="loginCount != null"> login_count=#{loginCount},</if>
+            <if test="lastLoginIp != null"> last_login_ip=#{lastLoginIp},</if>
+            <if test="lastLoginTime != null"> last_login_time=#{lastLoginTime},</if>
+            <if test="authkey != null"> authkey=#{authkey},</if>
+            <if test="isDeleted != null"> is_deleted=#{isDeleted},</if>
+            <if test="phoneNumber != null"> phone_number=#{phoneNumber},</if>
+            <if test="updateMan != null"> update_man=#{updateMan},</if>
+            <if test="updateTime != null"> update_time=#{updateTime},</if>
+        </trim>
+        where id =#{id}
+    </update>
+    <!-- 条件查询 -->
+    <select id="query" parameterType="com.congfu.query.UserQuery" resultMap="studentResultMap">
+        select id,user_name,
+        password,email,login_count,
+        last_login_ip,last_login_time,
+        authkey,active,
+        phone_number,is_deleted,
+        create_time,update_time,
+        create_man,update_man
+        from user
+        <trim prefix="WHERE(" suffix=")" prefixOverrides="AND |OR ">
+            <if test="userName != null">
+                AND  user_name = #{userName}
+            </if>
+            <if test="email != null">
+                AND  email like CONCAT(CONCAT('',#{email}),'%')
+            </if>
+            <if test="lastLoginIp != null">
+                AND  last_login_ip=#{lastLoginIp}
+            </if>
+            <if test="createMan != null">
+                AND  create_man=#{createMan}
+            </if>
+            <if test="updateMan != null">
+                AND  update_man=#{updateMan}
+            </if>
+            <if test="phoneNumber != null">
+                AND  phone_number like CONCAT(CONCAT('',#{phoneNumber}),'%')
+            </if>
+            <if test="isDeleted != null">
+                AND  is_deleted＝#{isDeleted}
+            </if>
+            <if test="lastLoginTimeBegin != null">
+                AND  last_login_time<![CDATA[ >= #{lastLoginTimeBegin}]]>
+            </if>
+            <if test="lastLoginTimeEnd != null">
+                AND  last_login_time<![CDATA[<#{lastLoginTimeEnd}]]>
+            </if>
+            <if test="createTimeBegin != null">
+                AND  create_time<![CDATA[ >= #{createTimeBegin}]]>
+            </if>
+            <if test="createTimeEnd != null">
+                AND  create_time<![CDATA[<#{createTimeEnd}]]>
+            </if>
+        </trim>
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
