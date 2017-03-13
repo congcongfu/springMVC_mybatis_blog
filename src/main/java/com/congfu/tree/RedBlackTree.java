@@ -2,9 +2,8 @@
  * Company
  * Copyright (C) 2004-2017 All Rights Reserved.
  */
-package tree;
+package com.congfu.tree;
 
-import org.omg.CORBA.NO_IMPLEMENT;
 
 /**
  * @author fucong
