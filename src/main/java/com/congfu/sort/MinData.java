@@ -2,7 +2,7 @@
  * Company
  * Copyright (C) 2004-2017 All Rights Reserved.
  */
-package sort;
+package com.congfu.sort;
 
 /**
  * @author fucong
