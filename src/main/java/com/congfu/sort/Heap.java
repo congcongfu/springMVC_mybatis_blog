@@ -2,14 +2,14 @@
  * Company
  * Copyright (C) 2004-2017 All Rights Reserved.
  */
-package sort;
+package com.congfu.sort;
 
 /**
  * @author fucong
  * @version $Id Heap.java, v 0.1 2017-03-08 下午10:48 fucong Exp $$
  */
 public class Heap {
-    private Heap(){};
+    private Heap(){}
 
     public static void sort(Comparable[] data){
         int n = data.length;
@@ -25,7 +25,7 @@ public class Heap {
         while (2*k <= n){
             int j = 2 * k;
             if (j < n && less(data,j,j++)) j++;
-            if (!less(data,k,j)) break;;
+            if (!less(data,k,j)) break;
             swap(data,k,j);
             k = j;
         }
