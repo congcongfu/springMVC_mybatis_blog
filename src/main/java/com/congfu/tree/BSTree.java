@@ -116,10 +116,23 @@ public class BSTree <T extends Comparable<T>,Value>{
         return node;
     }
 
+    public void deletMax(){
+        root = deleteMax(root);
+        size--;
+    }
+
+    private Node deleteMax(Node node){
+        if (node.right == null) return node.left;
+        node.right = deleteMax(node.right);
+        return node;
+    }
+
     public void delete(T key){
         root = delete(root,key);
         size--;
     }
+
+
 
     private Node delete(Node node,T key){
         if (node == null) return  null;
@@ -187,6 +200,19 @@ public class BSTree <T extends Comparable<T>,Value>{
         return queue;
     }
 
+    public void  invertTree(){
+        root = invertTree(root);
+    }
+
+    public Node invertTree(Node node){
+        if (node == null) return  null;
+        Node left = node.left;
+        node.left = invertTree(node.right);
+        node.right = invertTree(left);
+
+        return  node;
+    }
+
 
     public static  void  main(String [] args){
         BSTree<Integer,String> tree = new BSTree<Integer, String>();
@@ -199,10 +225,12 @@ public class BSTree <T extends Comparable<T>,Value>{
         tree.put(7,"7");
         tree.put(6,"6");
 //        tree.deleteMin();
-        Iterable<Integer> ite = tree.keys(2,9);
-
         System.out.println(tree.getMax().value);
         System.out.println(tree.min());
+        tree.invertTree();
+        System.out.println(tree.getMax().value);
+        System.out.println(tree.min());
+
     }
 
 
