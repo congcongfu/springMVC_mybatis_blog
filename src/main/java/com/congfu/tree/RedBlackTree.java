@@ -66,6 +66,10 @@ public class RedBlackTree<Key extends Comparable<Key>,Value> {
         return node.size;
     }
 
+    public boolean isEmpty(){
+        return root==null;
+    }
+
     public  void  put(Key key,Value value){
         root = putValue(root,key,value);
         root.color = BLACK;
@@ -94,19 +98,91 @@ public class RedBlackTree<Key extends Comparable<Key>,Value> {
     }
 
 
-    public static  void  main(String [] args){
+    private Node getFirstNode(){
+        if (root== null) return  null;
+        Node temp = root;
+        while (temp.left != null){
+            temp = temp.left;
+        }
+        return  temp;
+    }
+
+    private Node getLastNode(){
+        if (root == null) return  null;
+        Node temp = root;
+        while (temp.right != null){
+            temp = temp.right;
+        }
+        return temp;
+    }
+
+    public void deleteMin(){
+        if (!isRed(root.left) && !isRed(root.right)){
+            root.color = RED;
+        }
+        root = deleteMin(root);
+        if (!isEmpty()){
+            root.color = BLACK;
+        }
+    }
+
+    private Node deleteMin(Node node){
+        // // TODO: 2017/3/13
+        return node;
+    }
+
+    public void deleteMax(){
+        if (!isRed(root.left) && !isRed(root.right)){
+            root.color = RED;
+        }
+        root = deleteMin(root);
+        if (!isEmpty()){
+            root.color = BLACK;
+        }
+    }
+
+    private Node deleteMax(Node node){
+        //  // TODO: 2017/3/13
+        return  node;
+    }
+    
+    private Node moveRedLeft(Node node){
+        // // TODO: 2017/3/13
+        flipColors(node);
+        if (isRed(node.right.left)){
+            node.right = rotateRight(node.right);
+            node = rotateLeft(node);
+            flipColors(node);
+        }
+        return  node;
+    }
+
+    private Node moveRedRight(Node node){
+        // // TODO: 2017/3/13
+        flipColors(node);
+        if (isRed(node.left.left)){
+            node = rotateRight(node);
+            flipColors(node);
+        }
+        return node;
+    }
+
+    public static void main(String [] args) {
         RedBlackTree<Integer,Integer> tree = new RedBlackTree<Integer, Integer>();
-        tree.put(1,1);
-        tree.put(2,2);
-        tree.put(3,3);
-        tree.put(4,4);
-        tree.put(5,5);
-        tree.put(6,6);
-        tree.put(7,7);
-        tree.put(8,8);
-        tree.put(9,9);
         tree.put(10,10);
-        System.out.println(true);
+        tree.put(9,9);
+        tree.put(8,8);
+        tree.put(7,7);
+        tree.put(6,6);
+        tree.put(5,5);
+        tree.put(4,4);
+        tree.put(3,3);
+        tree.put(2,2);
+        tree.put(1,1);
+        tree.put(11,11);
+
+        System.out.println(tree.getFirstNode().value);
+        System.out.println(tree.getLastNode().value);
     }
 
 
