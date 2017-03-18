@@ -46,6 +46,19 @@ public class Bag<Item> implements Iterable<Item> {
         size++;
     }
 
+    public boolean contains(Item item){
+        boolean result = find(first,item);
+
+
+        return  result;
+    }
+
+    private boolean find(Node<Item> node,Item item){
+        if (node ==null) return  false;
+        else  if (item.equals(node.item)) return  true;
+        else return find(node.next,item);
+    }
+
     public Iterator<Item> iterator()  {
         return new ListIterator<Item>(first);
     }
@@ -75,9 +88,7 @@ public class Bag<Item> implements Iterable<Item> {
             bag.add("1"+i);
         }
         System.out.println(" size of bag = "+bag.size());
-        for (String s : bag){
-            System.out.println(s);
-        }
+        System.out.println(bag.contains("20"));
     }
 }
 
