@@ -24,6 +24,7 @@ public class DepthFirstSearch {
         count++;
         for (int w : G.adj(v)){
             if (!marked[w]){
+                System.out.println( v + " ->" +w);
                 dfs(G,w);
             }
         }
@@ -34,5 +35,19 @@ public class DepthFirstSearch {
     }
     public int count(){
         return count;
+    }
+
+    public  static  void  main(String [] args){
+        Graph graph = new Graph(6);
+        graph.addEdge(0,1);
+        graph.addEdge(0,2);
+        graph.addEdge(1,2);
+        graph.addEdge(2,3);
+        graph.addEdge(3,4);
+        graph.addEdge(4,5);
+        System.out.println(graph.degree(0));
+
+        System.out.println(graph.toString());
+        DepthFirstSearch depthFirstSearch = new DepthFirstSearch(graph,0);
     }
 }
