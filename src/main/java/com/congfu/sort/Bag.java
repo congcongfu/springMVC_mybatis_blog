@@ -48,8 +48,6 @@ public class Bag<Item> implements Iterable<Item> {
 
     public boolean contains(Item item){
         boolean result = find(first,item);
-
-
         return  result;
     }
 

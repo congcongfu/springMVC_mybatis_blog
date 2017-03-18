@@ -74,7 +74,7 @@ public class Graph {
         validateVertex(v);
         validateVertex(w);
         E++;
-        // 防止重复加入同一个元素
+        // 防止重复加入同一个元素  不允许有环
         if (!adj[v].contains(w)){
             adj[v].add(w);
         }
@@ -104,6 +104,16 @@ public class Graph {
         return  max;
     }
 
+    public int numberOfSelfLoops(Graph graph){
+        int count = 0;
+        for (int v = 0; v < graph.V(); v++){
+            for (int w : graph.adj(v)){
+                if (v == w) count ++;
+            }
+        }
+        return count /2;
+    }
+
     public String toString(){
         StringBuilder s = new StringBuilder();
         s.append(V+" vertices, "+E+" edges "+NEWLINE);
@@ -129,7 +139,8 @@ public class Graph {
         graph.addEdge(1,3);
         graph.addEdge(1,4);
         graph.addEdge(1,5);
-        System.out.println(graph.maxDegree());
+        graph.addEdge(1,1);
+        System.out.println(graph.numberOfSelfLoops(graph));
         System.out.println(graph.toString());
     }
 
