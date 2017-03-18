@@ -74,8 +74,13 @@ public class Graph {
         validateVertex(v);
         validateVertex(w);
         E++;
-        adj[v].add(w);
-        adj[w].add(v);
+        // 防止重复加入同一个元素
+        if (!adj[v].contains(w)){
+            adj[v].add(w);
+        }
+        if (!adj[w].contains(v)){
+            adj[w].add(v);
+        }
     }
 
     public Iterable<Integer> adj(int v){
@@ -86,6 +91,17 @@ public class Graph {
     public int degree(int v){
         validateVertex(v);
         return adj[v].size();
+    }
+
+    public   int maxDegree(){
+        int max = 0;
+        for (int i = 0 ; i< adj.length ; i++){
+            if (max < degree(i)){
+                max = degree(i);
+            }
+        }
+
+        return  max;
     }
 
     public String toString(){
@@ -113,6 +129,7 @@ public class Graph {
         graph.addEdge(1,3);
         graph.addEdge(1,4);
         graph.addEdge(1,5);
+        System.out.println(graph.maxDegree());
         System.out.println(graph.toString());
     }
 
