@@ -2,7 +2,7 @@
  * Company
  * Copyright (C) 2004-2017 All Rights Reserved.
  */
-package com.congfu.sort;
+package com.congfu.baseData;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
