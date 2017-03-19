@@ -13,8 +13,9 @@ import java.util.Stack;
 public class DepthFirstPath {
 
     private boolean[] marked;
-    private int[] edgeTo;
-    private int s;
+    //表示一棵以起点维根节点的树
+    private int[] edgeTo;  //表示点与点相邻关系,比如 edgeTo[5] = 1 表示 顶点1联通顶点5
+    private final int s;
 
     public DepthFirstPath(Graph graph, int s) {
         marked = new boolean[graph.V()];
@@ -22,6 +23,7 @@ public class DepthFirstPath {
         this.s = s;
         validateVertex(s);
         dfs(graph, s);
+        System.out.checkError();
     }
 
 
@@ -68,14 +70,14 @@ public class DepthFirstPath {
         graph.addEdge(1, 2);
         graph.addEdge(1, 4);
         graph.addEdge(1, 5);
-        DepthFirstPath depthFisrtPath = new DepthFirstPath(graph, 0);
-        System.out.println(depthFisrtPath.hasPathTo(5));
+        DepthFirstPath depthFirstPath = new DepthFirstPath(graph, 2);
+        System.out.println(depthFirstPath.hasPathTo(5));
 
-        Stack<Integer> path = (Stack<Integer>) depthFisrtPath.pathTo(5);
+        Stack<Integer> path = (Stack<Integer>) depthFirstPath.pathTo(5);
         while (path.size()>0){
             System.out.println(path.pop());
         }
-        System.out.println(depthFisrtPath.pathTo(5));
+        System.out.println(depthFirstPath.pathTo(5));
     }
 
 }
